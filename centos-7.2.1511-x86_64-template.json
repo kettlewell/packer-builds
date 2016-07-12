@@ -55,9 +55,19 @@
 
     "provisioners": [
        {
+           "type": "file",
+           "source": "files/ansible-profile.sh",
+           "destination": "/tmp/ansible-profile.sh"
+       },
+       {
            "only": [ "base" ],
            "type": "shell",
-           "script": "provisioners/disable_rhgb"
+           "script": "provisioners/ansible-profile"
+       }, 
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/disable-rhgb"
        }, 
        {
            "only": [ "base" ],
@@ -117,7 +127,7 @@
        {
            "only": [ "base" ],
            "type": "shell",
-           "script": "provisioners/dracut_growpart"
+           "script": "provisioners/dracut-growpart"
        },
        {
            "only": [ "base" ],
@@ -132,6 +142,11 @@
        {
            "only": [ "base" ],
            "type": "shell",
+           "script": "provisioners/ansible-deploys"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
            "script": "provisioners/avahi-daemon"
        },
        {
@@ -142,7 +157,7 @@
        {
            "only": [ "base" ],
            "type": "shell",
-           "script": "provisioners/lock_root"
+           "script": "provisioners/lock-root"
        },
        {
            "only": [ "base" ],

@@ -14,5 +14,7 @@ output_packer/
 # When testing vagrant after a packer build
 .vagrant/
 
-# emacs backup files
+# emacs backup and autorecover files
 *~
+#*
+.#*
