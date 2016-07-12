@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash 
+
+set -eux
 
 if [ -f /boot/grub/grub.conf ]; then
 	sed -i \

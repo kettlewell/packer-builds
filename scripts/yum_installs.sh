@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash 
+
+set -eux
 
 # put all the yum install files into one place for now... 
 

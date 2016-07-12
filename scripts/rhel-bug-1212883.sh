@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash 
+
+set -eux
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1212883
 

@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash 
+
+set -eux
 
 if [ ! -d /opt/git ]; then
    mkdir -p /opt/git

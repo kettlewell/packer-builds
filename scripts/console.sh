@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -eux
+#!/bin/env bash 
+
+set -eux
 
 exec < /dev/console > /dev/console
 

@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash 
+
+set -eux
 
 # Setup ephemerals
 if [ ! -d /etc/cloud ]; then

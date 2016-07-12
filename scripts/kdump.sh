@@ -1,3 +1,5 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash 
+
+set -eux
 
 systemctl disable kdump.service

@@ -1,4 +1,6 @@
-#!/usr/bin/env bash -eux
+#!/usr/bin/env bash 
+
+set -eux
 
 mykern="$(uname -r | cut -d. -f1,2)"
 
