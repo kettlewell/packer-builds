@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -eu
+#!/bin/sh -eux
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1212883
 
@@ -8,8 +6,6 @@ myrel="$(awk '{print $4}' /etc/centos-release | cut -d. -f1,2)"
 if [ "${myrel}" != '7.1' ]; then
 	exit 0
 fi
-
-# yum install -y patch
 
 pdir=$(mktemp -d "${TMPDIR:-/tmp}/${0##*/}.XXXXXX")
 cat > "${pdir}/patch" <<'EOF'

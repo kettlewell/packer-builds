@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -eu
+#!/bin/sh -eux
 
 if [ -f /boot/grub/grub.conf ]; then
 	sed -i \

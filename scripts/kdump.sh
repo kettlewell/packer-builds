@@ -1,5 +1,3 @@
-#!/bin/sh -x
-
-set -eu
+#!/bin/sh -eux
 
 systemctl disable kdump.service

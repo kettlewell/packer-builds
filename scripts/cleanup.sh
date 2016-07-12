@@ -1,13 +1,14 @@
-#!/bin/sh
+#!/bin/sh -eux
 
 echo "Yum Updating.... "
 yum -y update
 echo "Yum Cleaning... "
 yum -y clean all
 
-
-service rsyslog stop
-service crond stop
+systemctl stop rsyslog
+systemctl stop crond
+#service rsyslog stop
+#service crond stop
 
 rm -f /etc/ssh/ssh_host_*
 
@@ -24,3 +25,7 @@ shred -u /etc/ssh/*_key /etc/ssh/*_key.pub
 shred -u /root/.*history  /home/centos/.*history /home/*/.*history
 dd if=/dev/zero of=/zeros bs=1M
 rm -f /zeros
+
+sync
+sync
+sync

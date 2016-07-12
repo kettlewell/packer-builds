@@ -65,28 +65,15 @@
            "scripts": [
                "scripts/console.sh",
                "scripts/disable-rhgb.sh",
-
-               "scripts/git.sh",
-               "scripts/gcc.sh",
-               "scripts/net-tools.sh",
-               "scripts/htop.sh",
-               "scripts/emacs-nox.sh",
-               "scripts/tree.sh",
-               "scripts/patch.sh",
-               "scripts/libffi.sh",
-               "scripts/python-pip.sh",
-
+               "scripts/yum_installs.sh",
                "scripts/ansible.sh",
                "scripts/ansible-deploys.sh",
                "scripts/ansible-profile.sh",
-
                "scripts/rhel-bug-1212883.sh",
                "scripts/dracut-growpart.sh",
                "scripts/cloud-init.sh",
-
                "scripts/avahi-daemon.sh",
                "scripts/kdump.sh",
-
                "scripts/lock-root.sh",
                "scripts/cleanup.sh"
        }

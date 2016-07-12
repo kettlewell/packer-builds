@@ -1,6 +1,5 @@
-#!/bin/sh
+#!/bin/sh -eux
 
-set -eu
 exec < /dev/console > /dev/console
 
 

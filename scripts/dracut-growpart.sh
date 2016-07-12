@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -eu
+#!/bin/sh -eux
 
 mykern="$(uname -r | cut -d. -f1,2)"
 
@@ -14,7 +12,5 @@ elif [ "${mymaj}" = 3 ]; then
 		exit 0
 	fi
 fi
-
-yum install -y dracut-modules-growroot
 
 dracut -f

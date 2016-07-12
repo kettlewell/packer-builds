@@ -1,21 +1,18 @@
-#!/bin/sh
-
-set -eu
-
-yum install -y cloud-init cloud-utils-growpart
+#!/bin/sh -eux
 
 # Setup ephemerals
 mkdir -p /etc/cloud 
-mkdir -p /mnt/ephemeral0
+# mkdir -p /mnt/ephemeral0
 
 touch /etc/cloud/cloud.cfg
 
 cat >> /etc/cloud/cloud.cfg <<'EOF'
 datasource_list: [ Ec2, None ]
-mounts:
- - [ /dev/xvdb, /mnt/ephemeral0, ext4, "defaults,noatime,nodiratime,nofail", "0", "2" ]
 EOF
 
+# mounts:
+#  - [ /dev/xvdb, /mnt/ephemeral0, ext4, "defaults,noatime,nodiratime,nofail", "0", "2" ]
+# EOF
 
 
 # Change cloud-init's default "centos" user to the more standard ec2-user
