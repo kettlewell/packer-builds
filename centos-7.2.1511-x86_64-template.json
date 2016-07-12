@@ -76,6 +76,7 @@
                "scripts/kdump.sh",
                "scripts/lock-root.sh",
                "scripts/cleanup.sh"
+           ]
        }
     ]
 }
