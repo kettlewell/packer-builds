@@ -1,0 +1,153 @@
+{
+    "variables": {
+        "build_number": "{{timestamp}}",
+        "centos_version": "7.2.1511",
+        "iso_url": "http://mirror.steadfast.net/centos/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1511.iso",
+        "iso_checksum": "9ed9ffb5d89ab8cca834afce354daa70a21dcb410f58287d6316259ff89758f5",
+        "iso_checksum_type": "sha256",
+        "root_hash": "*LOCKED*",
+        "ssh_timeout": "90m",
+        "sssd_conf": "files/emptyfile",
+        "tmpdir": "/tmp",
+        "vm_cpu": "1",
+        "vm_mem": "2048"
+    },
+
+    "builders": [
+        {
+            "boot_command": [
+                "<esc>",
+                "<wait>linux ks=http://{{.HTTPIP}}:{{.HTTPPort}}/ks-updates.cfg<enter>"
+            ],
+            "boot_wait": "5s",
+            "disk_size": 6000,
+            "format": "ova",
+            "guest_additions_mode": "disable",
+            "guest_os_type": "RedHat_64",
+            "http_directory": "./http",
+            "iso_checksum": "{{user `iso_checksum`}}",
+            "iso_checksum_type": "{{user `iso_checksum_type`}}",
+            "iso_url": "{{user `iso_url`}}",
+            "name": "base",
+            "output_directory": "output_packer",
+            "ssh_password": "root",
+            "ssh_timeout": "{{user `ssh_timeout`}}",
+            "ssh_username": "root",
+            "shutdown_command": "shutdown -h now",
+            "type": "virtualbox-iso",
+            "vboxmanage": [
+                [ "modifyvm", "{{.Name}}", "--memory", "{{user `vm_mem`}}" ],
+                [ "modifyvm", "{{.Name}}", "--cpus",   "{{user `vm_cpu`}}" ],
+                [ "modifyvm", "{{.Name}}", "--paravirtprovider",   "kvm" ],
+                [ "modifyvm", "{{.Name}}", "--nic1",   "nat" ],
+                [ "modifyvm", "{{.Name}}", "--nictype1",   "virtio" ],
+                [ "modifyvm", "{{.Name}}", "--vram",   "64" ],
+                [ "modifyvm", "{{.Name}}", "--hwvirtex",   "on" ],
+                [ "modifyvm", "{{.Name}}", "--nestedpaging",   "on" ],
+                [ "modifyvm", "{{.Name}}", "--largepages",   "on" ],
+                [ "modifyvm", "{{.Name}}", "--vtxvpid",   "on" ],
+                [ "modifyvm", "{{.Name}}", "--vtxux",   "on" ],
+                [ "modifyvm", "{{.Name}}", "--biospxedebug",   "on" ]
+            ],
+            "vm_name": "centos-{{user `centos_version`}}-x86_64-{{user `build_number`}}"
+        }
+    ],
+
+    "provisioners": [
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/disable_rhgb"
+       }, 
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/console"
+       }, 
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/git"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/gcc"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/net-tools"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/htop"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/emacs-nox"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/tree"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/patch"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/libffi"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/python-pip"
+       }, 
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/rhel-bug-1212883"
+       }, 
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/dracut_growpart"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/cloud-init"
+       }, 
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/ansible"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/avahi-daemon"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/kdump"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/lock_root"
+       },
+       {
+           "only": [ "base" ],
+           "type": "shell",
+           "script": "provisioners/cleanup"
+       }
+    ]
+}
