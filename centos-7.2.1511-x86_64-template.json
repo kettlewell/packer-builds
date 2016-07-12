@@ -62,107 +62,33 @@
        {
            "only": [ "base" ],
            "type": "shell",
-           "script": "provisioners/ansible-profile"
-       }, 
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/disable-rhgb"
-       }, 
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/console"
-       }, 
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/git"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/gcc"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/net-tools"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/htop"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/emacs-nox"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/tree"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/patch"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/libffi"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/python-pip"
-       }, 
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/rhel-bug-1212883"
-       }, 
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/dracut-growpart"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/cloud-init"
-       }, 
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/ansible"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/ansible-deploys"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/avahi-daemon"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/kdump"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/lock-root"
-       },
-       {
-           "only": [ "base" ],
-           "type": "shell",
-           "script": "provisioners/cleanup"
+           "scripts": [
+               "scripts/console.sh",
+               "scripts/disable-rhgb.sh",
+
+               "scripts/git.sh",
+               "scripts/gcc.sh",
+               "scripts/net-tools.sh",
+               "scripts/htop.sh",
+               "scripts/emacs-nox.sh",
+               "scripts/tree.sh",
+               "scripts/patch.sh",
+               "scripts/libffi.sh",
+               "scripts/python-pip.sh",
+
+               "scripts/ansible.sh",
+               "scripts/ansible-deploys.sh",
+               "scripts/ansible-profile.sh",
+
+               "scripts/rhel-bug-1212883.sh",
+               "scripts/dracut-growpart.sh",
+               "scripts/cloud-init.sh",
+
+               "scripts/avahi-daemon.sh",
+               "scripts/kdump.sh",
+
+               "scripts/lock-root.sh",
+               "scripts/cleanup.sh"
        }
     ]
 }
