@@ -1,7 +1,10 @@
 #!/bin/sh -eux
 
 # Setup ephemerals
-mkdir -p /etc/cloud 
+if [ ! -d /etc/cloud ]; then
+  mkdir -p /etc/cloud 
+fi
+
 # mkdir -p /mnt/ephemeral0
 
 touch /etc/cloud/cloud.cfg

@@ -1,6 +1,9 @@
 #!/bin/sh -eux
 
-mkdir -p /opt/git
+if [ ! -d /opt/git ]; then
+  mkdir -p /opt/git
+fi
+
 cd /opt/git
 
 git clone git://github.com/ansible/ansible.git --recursive
@@ -9,7 +12,10 @@ cd /opt/git/ansible
 
 git reset --hard b599477242c44365236d4bae3e7766e37e6c4633
 
-mkdir /etc/ansible
+if [ ! -d /etc/ansible ]; then
+  mkdir /etc/ansible
+fi
+
 cd /etc/ansible
 
 ln -s /opt/git/ansible/contrib/inventory/ec2.ini ec2.ini
