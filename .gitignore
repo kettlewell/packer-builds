@@ -1,15 +1,22 @@
-# Cache objects
-packer_cache/
+# ignore test/playground scripts
+test_build.sh
 
-# ova/ovf
+# iso files
+*.iso
+
+# ova/ovf files
 *.ova
 *.ovf
 
 # For built boxes
 *.box
 
+# Cache objects
+packer_cache/
+
 # output directories
 output_packer/
+saved_builds/
 
 # When testing vagrant after a packer build
 .vagrant/

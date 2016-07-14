@@ -4,6 +4,7 @@ set -eux
 
 echo "Yum Updating.... "
 yum -y update
+
 echo "Yum Cleaning... "
 yum -y clean all
 
@@ -11,7 +12,6 @@ systemctl stop rsyslog
 systemctl stop crond
 #service rsyslog stop
 #service crond stop
-
 
 find /var/log/ -type f | while read file; do cat /dev/null > "${file}";done
 
@@ -24,13 +24,21 @@ find /root/ -type f -exec rm -f {} \;
 
 history -c
 
-shred -u /etc/ssh/*_key /etc/ssh/*_key.pub
-shred -u /root/.*history  /home/centos/.*history /home/*/.*history
-rm -f /etc/ssh/ssh_host_*
+echo "shredding..."
+# shred -u /etc/ssh/*_key /etc/ssh/*_key.pub
+# shred -u /root/.*history  /home/centos/.*history /home/*/.*history
+# rm -f /etc/ssh/ssh_host_*
 
-dd if=/dev/zero of=/zeros bs=1M
+echo "zeroing out the bits..."
+echo "not really...."
+
+dd if=/dev/zero of=/zeros bs=1M || echo "dd exit code $? is suppressed"
 rm -f /zeros
 
+echo "syncing..."
 sync
 sync
 sync
+
+echo "End of cleanup"
+echo ""
