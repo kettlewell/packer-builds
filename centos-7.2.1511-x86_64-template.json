@@ -69,6 +69,7 @@
                "scripts/ansible.sh",
                "scripts/ansible-deploys.sh",
                "scripts/ansible-profile.sh",
+               "scripts/term-profile.sh",
                "scripts/rhel-bug-1212883.sh",
                "scripts/dracut-growpart.sh",
                "scripts/cloud-init.sh",
