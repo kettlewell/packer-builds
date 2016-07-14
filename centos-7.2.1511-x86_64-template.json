@@ -66,6 +66,7 @@
                "scripts/console.sh",
                "scripts/disable-rhgb.sh",
                "scripts/yum_installs.sh",
+               "scripts/pip_installs.sh",
                "scripts/ansible.sh",
                "scripts/ansible-deploys.sh",
                "scripts/ansible-profile.sh",
