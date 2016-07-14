@@ -1,3 +1,6 @@
+Still need to verify that the ansible deploy depot is uploaded and usable, as well as any AWS security roles that need to be applied
+
+-----------
 To integrate the amazon import process directly into Packer, you can 
 use a post-processor of type amazon-import, like so:
 
