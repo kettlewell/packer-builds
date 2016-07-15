@@ -1,3 +1,10 @@
+---------------
+
+Should really consider creating a minimal, bare-bones image as an AMI, 
+and then use packers 'amazon-ebs' builder to configure and provision new images ... 
+
+---------------
+
            "scripts": [
                "scripts/console.sh",
                "scripts/disable-rhgb.sh",
