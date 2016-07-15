@@ -3,15 +3,15 @@
 set -eux
 
 if [ -f /boot/grub/grub.conf ]; then
-	sed -i \
-		-e 's/rhgb//g' \
-		/boot/grub/grub.conf
+    sed -i \
+        -e 's/rhgb//g' \
+        /boot/grub/grub.conf
 fi
 
 if [ -f /boot/grub2/grub.cfg ]; then
-	sed -i \
-		-e 's/rhgb//g' \
-		/etc/default/grub
+    sed -i \
+        -e 's/rhgb//g' \
+        /etc/default/grub
 
-	grub2-mkconfig -o /boot/grub2/grub.cfg
+    grub2-mkconfig -o /boot/grub2/grub.cfg
 fi

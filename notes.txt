@@ -1,3 +1,23 @@
+           "scripts": [
+               "scripts/console.sh",
+               "scripts/disable-rhgb.sh",
+               "scripts/yum_installs.sh",
+               "scripts/pip_installs.sh",
+               "scripts/ansible.sh",
+               "scripts/ansible-deploys.sh",
+               "scripts/ansible-profile.sh",
+               "scripts/term-profile.sh",
+               "scripts/rhel-bug-1212883.sh",
+               "scripts/dracut-growpart.sh",
+               "scripts/cloud-init.sh",
+               "scripts/avahi-daemon.sh",
+               "scripts/kdump.sh",
+               "scripts/lock-root.sh",
+               "scripts/cleanup.sh"
+           ]
+
+-----------
+
 Still need to verify that the ansible deploy depot is uploaded and usable, as well as any AWS security roles that need to be applied
 
 -----------
