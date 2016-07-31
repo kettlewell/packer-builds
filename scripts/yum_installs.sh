@@ -2,6 +2,8 @@
 
 set -eux
 
+# yum install -y cloud-init   
+
 # put all the yum install files into one place for now... 
 
 # If I decide to later build more than just the ansible master from this,
@@ -11,4 +13,12 @@ set -eux
 #  attempting previously.
 #
 
-yum install -y git openssl-devel python-devel gcc tree yum python-pip python-wheel python-setuptools patch net-tools libffi-devel libffi htop emacs-nox dracut-modules-growroot cloud-init cloud-utils-growpart
+# yum install -y git tree  htop emacs-nox bash-completion bash-completion-extras
+
+# yum install -y dracut-modules-growroot cloud-utils-growpart 
+
+# yum install -y openssl-devel gcc patch net-tools libffi-devel libffi yum
+
+# yum install -y python-pip python-devel python-wheel python-setuptools 
+
+# yum install -y 

@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -eu
+set -eux
 
 # Set systemd to not use "predictable network interface names"
 # http://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/
@@ -66,7 +66,7 @@ else
     cat > "${ifcfg_path}/ifcfg-eth0" <<-'EOF'
         BOOTPROTO=dhcp
         DEVICE=eth0
-        IPV6INIT=yes
+        IPV6INIT=no 
         NM_CONTROLLED=yes
         ONBOOT=yes
         TYPE=Ethernet

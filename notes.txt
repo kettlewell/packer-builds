@@ -1,3 +1,24 @@
+,
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
+        }
+      }
+
+      "virtualbox_version_file": ".vbox_version",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+
+
+
+aws ec2 import-image --cli-input-json "{\"Description\": \"centos-${centos_version}-x86_64-${build_timestamp}-disk1\",\"DiskContainers\": [{\"Description\": \"centos-${centos_version}-x86_64-${build_timestamp}-disk1\",\"UserBucket\": {\"S3Bucket\": \"${s3_bucket}\",\"S3Key\": \"centos-${centos_version}-x86_64-${build_timestamp}-disk1.vmdk\"}}]}"
+
+packer-virtualbox-iso-1469314539-disk1.vmdk
+centos-7.2.1511-x86_64-1469314539.vmdk
+
+aws ec2 import-image --cli-input-json "{\"Description\": \"packer-virtualbox-iso-1469314539-disk1\",\"DiskContainers\": [{\"Description\": \"packer-virtualbox-iso-1469314539-disk1\",\"UserBucket\": {\"S3Bucket\": \"kettlewell-images\",\"S3Key\": \"packer-virtualbox-iso-1469314539-disk1.vmdk\"}}]}"
+
+
+
 ---------------
 
 Should really consider creating a minimal, bare-bones image as an AMI, 

@@ -1,0 +1,43 @@
+install
+# url --url="http://mirror.rackspace.com/CentOS/7/os/x86_64/"
+cdrom
+lang en_US.UTF-8
+keyboard us
+network --bootproto=dhcp --hostname=centos7
+rootpw --plaintext root
+firewall --disabled
+selinux --disabled
+timezone UTC
+unsupported_hardware
+bootloader --location=mbr
+text
+skipx
+zerombr
+clearpart --all --initlabel
+autopart
+auth  --enableshadow --passalgo=sha512 --kickstart
+firstboot --disabled
+reboot
+user --groups=wheel,adm,systemd-journal --name=centos  --password=centos  --uid=1000 --gid=1000
+
+%packages --nobase
+sudo
+coreutils
+%end
+
+%post
+exec < /dev/tty3 > /dev/tty3
+chvt 3
+echo
+echo "################################"
+echo "# Running Post Configuration   #"
+echo "################################"
+(
+echo "centos        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
+sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
+/usr/bin/yum -y --enablerepo extras install epel-release deltarpm 
+/usr/bin/yum -y update
+) 2>&1 | /usr/bin/tee /var/log/post_install.log
+chvt 1
+
+%end

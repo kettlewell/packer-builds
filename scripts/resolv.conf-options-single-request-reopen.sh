@@ -1,7 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-exit
-
-set -eu
+set -eux
 
 echo 'RES_OPTIONS="${RES_OPTIONS} single-request-reopen"' >> /etc/sysconfig/network
