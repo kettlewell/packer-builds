@@ -7,17 +7,24 @@
   "provisioners": [
     {
       "type": "shell",
-      "scripts": [
-        "scripts/cloud-init.sh",
-        "scripts/98cleanup.sh",
-        "scripts/99minimize.sh"
-      ],
-      "override": {
-        "virtualbox-iso": {
-          "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
-        }
-      }
-
+      "inline_shebang": "/usr/bin/bash -eux",
+      "execute_command": "echo 'centos'|sudo -S -E bash '{{.Path}}'",
+      "remote_path": "/tmp/debug-base-script.sh",
+      "skip_clean": "true",
+      "inline": [
+        "yum install -y cloud-init",
+        "yum -y clean all",
+        "chmod +x /etc/rc.d/rc.local",
+        "chmod +x /etc/rc.local",
+        "touch /etc/rc.d/rc.local.vmimport",
+        "chmod +x /etc/rc.d/rc.local.vmimport",
+        "systemctl stop NetworkManager",
+        "systemctl disable NetworkManager",
+        "dd if=/dev/zero of=/EMPTY bs=1M",
+        "rm -f /EMPTY",
+        "sync",
+        "sync"
+      ]
     }
   ],
 
@@ -25,6 +32,8 @@
     {
       "vm_name": "centos-7.2-{{user `build_number`}}",
       "type": "virtualbox-iso",
+
+      "format": "ova",
 
       "guest_additions_mode":"disable",
       "guest_os_type": "Linux26_64",
@@ -64,5 +73,16 @@
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ]
     }
-  ]
+  ],
+  "post-processors": [
+    {
+      "type": "amazon-import",
+      "region": "us-east-1",
+      "s3_bucket_name": "kettlewell-images",
+      "tags": {
+      "Description": "packer amazon-import {{timestamp}}"
+      },
+      "skip_clean": "false"
+    }
+  ] 
 }
