@@ -14,12 +14,25 @@
       "destination": "/tmp/ansible-profile.sh"
     },
     {
+      "only": ["ansible"],
       "type": "shell",
       "scripts": [
-        "scripts/00base.sh",
-        "scripts/grub.sh",
-        "scripts/yum_installs.sh",
-        "scripts/cloud-init.sh"
+        "scripts/ansible/motd-ansible.sh",
+      ]
+    },
+    {
+      "only": ["minimal"],
+      "type": "shell",
+      "scripts": [
+        "scripts/minimal/motd-minimal.sh",
+      ]
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/minimal/yum-minimal.sh",
+        "scripts/minimal/grub.sh",
+        "scripts/minimal/cloud-init.sh"
       ],
       "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     },
@@ -27,17 +40,18 @@
       "only": ["ansible"],
       "type": "shell",
       "scripts": [
-        "scripts/ansible.sh",
-        "scripts/ansible-deploys.sh",
-        "scripts/ansible-profile.sh"
+        "scripts/ansible/yum-ansible.sh",
+        "scripts/ansible/ansible.sh",
+        "scripts/ansible/ansible-deploys.sh",
+        "scripts/ansible/ansible-profile.sh"
       ],
       "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     },
     {
       "type": "shell",
       "scripts": [
-        "scripts/98cleanup.sh",
-        "scripts/99minimize.sh"
+        "scripts/minimal/cleanup.sh",
+        "scripts/minimal/minimize.sh"
       ],
       "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     }
@@ -133,6 +147,7 @@
   ],
   "post-processors": [
     {
+      "only": ["minimal"],
       "type": "amazon-import",
       "region": "{{ user `awsregion`}}",
       "s3_bucket_name": "{{user `s3bucket`}}",
