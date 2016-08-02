@@ -9,15 +9,11 @@
       "type": "shell",
       "inline_shebang": "/usr/bin/bash -eux",
       "execute_command": "echo 'centos'|sudo -S -E bash '{{.Path}}'",
-      "remote_path": "/tmp/debug-base-script.sh",
+      "remote_path": "/tmp/centos7-minimal.sh",
       "skip_clean": "true",
       "inline": [
         "yum install -y cloud-init",
         "yum -y clean all",
-        "chmod +x /etc/rc.d/rc.local",
-        "chmod +x /etc/rc.local",
-        "touch /etc/rc.d/rc.local.vmimport",
-        "chmod +x /etc/rc.d/rc.local.vmimport",
         "systemctl stop NetworkManager",
         "systemctl disable NetworkManager",
         "dd if=/dev/zero of=/EMPTY bs=1M",
@@ -30,6 +26,7 @@
 
   "builders": [
     {
+      "name": "minimal",
       "vm_name": "centos-7.2-{{user `build_number`}}",
       "type": "virtualbox-iso",
 
@@ -58,7 +55,7 @@
 
       "boot_wait": "10s",
       "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debug-kickstart.cfg<enter>",
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart-centos7-minimal.cfg<enter>",
         "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>","<wait10><wait10><wait10>",

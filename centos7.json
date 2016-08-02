@@ -1,0 +1,145 @@
+{
+  "description": "CentOS 7 Minimal and Ansible Master",
+
+  "variables": {
+        "build_number": "{{timestamp}}",
+        "s3bucket": "",
+        "awsregion": "us-east-1"
+  },
+  "provisioners": [
+    {
+      "only": ["ansible"],
+      "type": "file",
+      "source": "files/ansible-profile.sh",
+      "destination": "/tmp/ansible-profile.sh"
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/00base.sh",
+        "scripts/grub.sh",
+        "scripts/yum_installs.sh",
+        "scripts/cloud-init.sh"
+      ],
+      "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
+    },
+    {
+      "only": ["ansible"],
+      "type": "shell",
+      "scripts": [
+        "scripts/ansible.sh",
+        "scripts/ansible-deploys.sh",
+        "scripts/ansible-profile.sh"
+      ],
+      "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/98cleanup.sh",
+        "scripts/99minimize.sh"
+      ],
+      "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
+    }
+  ],
+
+  "builders": [
+    {
+      "name": "minimal",
+      "vm_name": "centos-7.2-minimal-{{user `build_number`}}",
+      "type": "virtualbox-iso",
+
+      "format": "ova",
+
+      "guest_additions_mode":"disable",
+      "guest_os_type": "Linux26_64",
+
+      "output_directory": "output_packer",
+      "http_directory": "http",
+
+      "headless": false,
+      "disk_size": 6000,
+
+      "iso_url": "http://mirror.rackspace.com/CentOS/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+      "iso_checksum": "f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284",
+      "iso_checksum_type": "sha256",
+
+      "ssh_username": "centos",
+      "ssh_password": "centos",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "5m",
+
+      "shutdown_command": "echo 'centos'| sudo -S /sbin/poweroff",
+
+      "boot_wait": "10s",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart-centos7-minimal.cfg<enter>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>"
+      ],
+
+     "hard_drive_interface": "sata",
+     "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    },
+    {
+      "name": "ansible",
+      "vm_name": "centos-7.2-ansible-{{user `build_number`}}",
+      "type": "virtualbox-iso",
+
+      "guest_additions_mode":"disable",
+      "guest_os_type": "Linux26_64",
+
+      "output_directory": "output_packer",
+      "http_directory": "http",
+
+      "headless": false,
+      "disk_size": 6000,
+
+      "iso_url": "http://mirror.rackspace.com/CentOS/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+      "iso_checksum": "f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284",
+      "iso_checksum_type": "sha256",
+
+      "ssh_username": "centos",
+      "ssh_password": "centos",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "5m",
+
+      "shutdown_command": "echo 'centos'| sudo -S /sbin/poweroff",
+
+      "boot_wait": "10s",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart-centos7-ansible-master.cfg<enter>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>"
+      ],
+
+     "hard_drive_interface": "sata",
+     "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "amazon-import",
+      "region": "{{ user `awsregion`}}",
+      "s3_bucket_name": "{{user `s3bucket`}}",
+      "tags": {
+      "Description": "Centos 7 Packer Import-{{.Name}}-{{timestamp}}"
+      },
+      "skip_clean": "false"
+    }
+  ] 
+}
