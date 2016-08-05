@@ -17,19 +17,24 @@
       "only": ["ansible"],
       "type": "shell",
       "scripts": [
-        "scripts/ansible/motd-ansible.sh",
-      ]
+        "scripts/ansible/motd-ansible.sh"
+      ],
+      "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     },
     {
       "only": ["minimal"],
       "type": "shell",
       "scripts": [
-        "scripts/minimal/motd-minimal.sh",
-      ]
+        "scripts/minimal/motd-minimal.sh"
+      ],
+      "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     },
     {
       "type": "shell",
       "scripts": [
+        "scripts/minimal/base.sh",
+        "scripts/minimal/term-profile.sh",
+        "scripts/minimal/ssh.sh",
         "scripts/minimal/yum-minimal.sh",
         "scripts/minimal/grub.sh",
         "scripts/minimal/cloud-init.sh"
