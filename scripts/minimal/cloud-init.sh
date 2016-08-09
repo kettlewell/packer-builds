@@ -1,6 +1,7 @@
 #!/usr/bin/bash -eux
 
-yum install -y cloud-init
+yum install -y cloud-init dracut-modules-growroot
+
 
 #systemctl enable cloud-config.service 
 #systemctl enable cloud-final.service

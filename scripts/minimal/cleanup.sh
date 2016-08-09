@@ -5,10 +5,10 @@ set -eux
 echo "==> Base Config"
 
 # NB: Should randomize, or just disable
-echo "==> Lock Root Account"
-echo "root:${PACKER_ROOT_HASH}" | chpasswd -e
+# echo "==> Lock Root Account"
+# echo "root:${PACKER_ROOT_HASH}" | chpasswd -e
 
-echo "Yum Updating.... "
+echo "==> Yum Updating.... "
 yum -y update
 
 #
@@ -16,11 +16,11 @@ yum -y update
 #
 yum -y clean all
 
-# stop / disable uncessecary services
-systemctl disable avahi-daemon.service
-systemctl disable kdump.service
-systemctl stop rsyslog
-systemctl stop crond
+echo "==> Stopping Uncessarry Services"
+# systemctl disable avahi-daemon.service
+# systemctl disable kdump.service
+# systemctl stop rsyslog
+# systemctl stop crond
 
 
 # sanitize log files

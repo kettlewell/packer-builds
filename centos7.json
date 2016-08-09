@@ -30,14 +30,15 @@
       "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     },
     {
+      "only": ["minimal","ansible"],
       "type": "shell",
       "scripts": [
         "scripts/minimal/base.sh",
         "scripts/minimal/term-profile.sh",
         "scripts/minimal/ssh.sh",
         "scripts/minimal/yum-minimal.sh",
-        "scripts/minimal/grub.sh",
-        "scripts/minimal/cloud-init.sh"
+        "scripts/minimal/cloud-init.sh",
+        "scripts/minimal/grub.sh"
       ],
       "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     },
@@ -53,6 +54,7 @@
       "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
     },
     {
+      "only": ["minimal","ansible"],
       "type": "shell",
       "scripts": [
         "scripts/minimal/cleanup.sh",
@@ -86,13 +88,57 @@
       "ssh_username": "centos",
       "ssh_password": "centos",
       "ssh_port": 22,
-      "ssh_wait_timeout": "5m",
+      "ssh_wait_timeout": "15m",
 
       "shutdown_command": "echo 'centos'| sudo -S /sbin/poweroff",
 
       "boot_wait": "10s",
       "boot_command": [
         "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart-centos7-minimal.cfg<enter>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10>","<wait10><wait10><wait10>"
+      ],
+
+     "hard_drive_interface": "sata",
+     "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    },
+    {
+      "name": "generic-cloud",
+      "vm_name": "centos-7.2-generic-cloud-{{user `build_number`}}",
+      "type": "virtualbox-iso",
+
+      "format": "ova",
+
+      "guest_additions_mode":"disable",
+      "guest_os_type": "Linux26_64",
+
+      "output_directory": "output_packer",
+      "http_directory": "http",
+
+      "headless": false,
+      "disk_size": 6000,
+
+      "iso_url": "http://mirror.rackspace.com/CentOS/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+      "iso_checksum": "f90e4d28fa377669b2db16cbcb451fcb9a89d2460e3645993e30e137ac37d284",
+      "iso_checksum_type": "sha256",
+
+      "ssh_username": "centos",
+      "ssh_password": "centos",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "15m",
+
+      "shutdown_command": "echo 'centos'| sudo -S /sbin/poweroff",
+
+      "boot_wait": "10s",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart-centos7-generic-cloud.cfg<enter>",
         "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
         "<wait10><wait10><wait10>","<wait10><wait10><wait10>",
@@ -128,7 +174,7 @@
       "ssh_username": "centos",
       "ssh_password": "centos",
       "ssh_port": 22,
-      "ssh_wait_timeout": "5m",
+      "ssh_wait_timeout": "15m",
 
       "shutdown_command": "echo 'centos'| sudo -S /sbin/poweroff",
 
@@ -152,7 +198,7 @@
   ],
   "post-processors": [
     {
-      "only": ["minimal"],
+      "only": ["minimal","generic-cloud"],
       "type": "amazon-import",
       "region": "{{ user `awsregion`}}",
       "s3_bucket_name": "{{user `s3bucket`}}",

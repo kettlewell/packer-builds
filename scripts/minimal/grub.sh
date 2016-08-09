@@ -24,7 +24,9 @@ if [ -f /boot/grub2/grub.cfg ]; then
 
     grub2-mkconfig -o /boot/grub2/grub.cfg
 
-    dracut --force --add-drivers xen_blkfront /boot/initramfs-$(uname -r).img
+    # dracut --force --add-drivers xen_blkfront /boot/initramfs-$(uname -r).img
+
+    rpm -qa kernel | sed 's/^kernel-//'  | xargs -I {} dracut  --force --add-drivers xen_blkfront /boot/initramfs-{}.img {}
 
     rm /etc/hosts
 fi
