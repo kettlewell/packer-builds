@@ -37,7 +37,6 @@
         "scripts/minimal/term-profile.sh",
         "scripts/minimal/ssh.sh",
         "scripts/minimal/yum-minimal.sh",
-        "scripts/minimal/cloud-init.sh",
         "scripts/minimal/grub.sh"
       ],
       "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
@@ -46,6 +45,15 @@
       "only": ["ansible"],
       "type": "shell",
       "scripts": [
+        "scripts/minimal/cloud-init.sh"
+      ],
+      "execute_command": "echo 'centos'|sudo -S bash '{{.Path}}'"
+    },
+    {
+      "only": ["ansible"],
+      "type": "shell",
+      "scripts": [
+        "scripts/minimal/grub.sh",
         "scripts/ansible/yum-ansible.sh",
         "scripts/ansible/ansible.sh",
         "scripts/ansible/ansible-deploys.sh",
@@ -70,7 +78,7 @@
       "vm_name": "centos-7.2-minimal-{{user `build_number`}}",
       "type": "virtualbox-iso",
 
-      "format": "ova",
+      "format": "ovf",
 
       "guest_additions_mode":"disable",
       "guest_os_type": "Linux26_64",
@@ -198,7 +206,7 @@
   ],
   "post-processors": [
     {
-      "only": ["minimal","generic-cloud"],
+      "only": ["generic-cloud"],
       "type": "amazon-import",
       "region": "{{ user `awsregion`}}",
       "s3_bucket_name": "{{user `s3bucket`}}",
